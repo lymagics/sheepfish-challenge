@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  db:
+    image: postgres
+    env_file:
+      - .env.services
+    volumes:
+      - sheepfish:/var/lib/postgresql/data/
+    ports:
+      - '5432:5432'
+    restart: always
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - sheepfish-redis:/data
+  wkhtmltopdf:
+    image: openlabs/docker-wkhtmltopdf-aas
+    restart: always
+    ports:
+      - '4000:80'
+
+volumes:
+  sheepfish:
+  sheepfish-redis:

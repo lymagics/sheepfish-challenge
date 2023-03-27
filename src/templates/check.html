@@ -1,0 +1,8 @@
+<h3>Check detail</h3>
+<p>Check type: {{ check.check_type }}</p>
+<p>Check id: {{ check.pk }}</p>
+<div>
+    {% for item, quantity in check.order.items %}
+        <p>{{ item }} - {{ quantity }}</p>
+    {% endfor %}
+</div>

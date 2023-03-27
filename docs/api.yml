@@ -1,0 +1,188 @@
+openapi: 3.0.0
+info:
+  title: Sheepfish API
+  description: API for Sheepfish Challenge
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8000/api
+    description: Development server
+
+paths:
+  /printers:
+    get:
+      summary: Get all available printers
+      description: Get all available printers
+      tags: 
+        - Printers
+      responses:
+        '200':
+          description: List of available printers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Printers'
+    post:
+      summary: Create new printer
+      description: Create new printer
+      tags:
+        - Printers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrinterCreate'
+      responses:
+        '201':
+          description: New printer instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Printer'
+  /printers/{pk}:
+    get:
+      summary: Get printer by id
+      description: Get printer by id
+      tags:
+        - Printers
+      parameters:
+        - in: path
+          name: pk
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the printer to get
+      responses:
+        '200':
+          description: Printer instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Printer'
+  /checks:
+    get:
+      summary: Get all checks
+      description: Get all checks
+      tags:
+        - Checks
+      responses:
+        '200':
+          description: List of checks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checks'
+    post:
+      summary: Create new check
+      description: Create new check
+      tags:
+        - Checks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckCreate'
+      responses:
+        '201':
+          description: New check instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Check'
+  /checks/{pk}:
+    get:
+      summary: Get check by id
+      description: Get check by id
+      tags:
+        - Checks
+      parameters:
+        - in: path
+          name: pk
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the check to get
+      responses:
+        '200':
+          description: Check instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Check'
+
+components:
+  schemas:
+    Printer:
+      type: object
+      properties:
+        pk:
+          type: integer
+        name:
+          type: string
+          maxLength: 50
+        api_key:
+          type: string
+          maxLength: 50
+        check_type:
+          type: string
+          maxLength: 7
+          enum: ['client', 'kitchen']
+        point_id:
+          type: integer
+    PrinterCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        api_key:
+          type: string
+          maxLength: 50
+        check_type:
+          type: string
+          maxLength: 7
+          enum: ['client', 'kitchen']
+        point_id:
+          type: integer
+    Printers:
+      type: array
+      items:
+        $ref: '#/components/schemas/Printer'
+    Check:
+      type: object
+      properties:
+        pk:
+          type: integer
+        check_type:
+          type: string
+          maxLength: 7
+          enum: ['client', 'kitchen']
+        status:
+          type: string
+          maxLength: 7
+          enum: ['new', 'rendered', 'printed']
+        printer:
+          $ref: '#/components/schemas/Printer'
+        order:
+          type: object
+    CheckCreate:
+      type: object
+      properties:
+        check_type:
+          type: string
+          maxLength: 7
+          enum: ['client', 'kitchen']
+        status:
+          type: string
+          maxLength: 7
+          enum: ['new', 'rendered', 'printed']
+        printer:
+          $ref: '#/components/schemas/Printer'
+        order:
+          type: object
+    Checks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Check'

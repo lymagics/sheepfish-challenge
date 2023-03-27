@@ -1,0 +1,21 @@
+- model: printers.printer
+  pk: 1
+  fields:
+    name: Epson L132
+    api_key: kdjvrwmsB2rKrDnzmrlyL4KNuv4xAn
+    check_type: kitchen
+    point_id: 9738
+- model: printers.printer
+  pk: 2
+  fields:
+    name: Pantum M6500
+    api_key: XZ0W309NuZCklPLSnN0vtJBYBqau8N
+    check_type: kitchen
+    point_id: 1491
+- model: printers.printer
+  pk: 3
+  fields:
+    name: Xerox B230
+    api_key: 54HlNEo7cQi4QpLh94LZGZBhgg1ric
+    check_type: client
+    point_id: 3643
